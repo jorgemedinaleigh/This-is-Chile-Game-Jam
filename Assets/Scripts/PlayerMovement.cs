@@ -6,9 +6,11 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
     float vertical;
-    float range = 5;
+    float range = 4.5f;
+    bool isOnGround = true;
 
     [SerializeField] float movementSpeed = 10f;
+    [SerializeField] float jumpForce = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +21,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessMovement();
+        ProcessJump();
+        PreventAirMovement();
     }
 
     private void ProcessMovement()
@@ -31,5 +34,27 @@ public class PlayerMovement : MonoBehaviour
         float clampedXPos = Mathf.Clamp(xPos, -range, range);
 
         transform.localPosition = new Vector3(clampedXPos, transform.localPosition.y, transform.localPosition.z);
+    }
+
+    private void ProcessJump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isOnGround = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        isOnGround = true;
+    }
+
+    private void PreventAirMovement()
+    {
+        if(isOnGround)
+        {
+            ProcessMovement();
+        }
     }
 }
