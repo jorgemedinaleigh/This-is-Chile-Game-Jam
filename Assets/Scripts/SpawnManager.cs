@@ -10,21 +10,20 @@ public class SpawnManager : MonoBehaviour
 
     private Vector3 spawnPos;
     private float waitTime;
+    private PlayerMovement playerMovement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        waitTime -= Time.deltaTime;
-        if(waitTime <= 0)
+        if(playerMovement.gameOver == false)
         {
-            SpawnObstacle();
-            SetTimer();
+            SpawnAtRandomTime();
         }
     }
 
@@ -37,6 +36,16 @@ public class SpawnManager : MonoBehaviour
         int randomIndex = Random.Range(0, obstacles.Length);
 
         Instantiate(obstacles[randomIndex], spawnPos, obstacles[randomIndex].transform.rotation);
+    }
+
+    private void SpawnAtRandomTime()
+    {
+        waitTime -= Time.deltaTime;
+        if(waitTime <= 0)
+        {
+            SpawnObstacle();
+            SetTimer();
+        }
     }
 
     private void SetTimer()

@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     float vertical;
     float range = 4.5f;
     bool isOnGround = true;
+    public bool gameOver = false;
 
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float jumpForce = 1f;
@@ -47,7 +48,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isOnGround = true;
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+        else if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            gameOver = true;
+        }
     }
 
     private void PreventAirMovement()
