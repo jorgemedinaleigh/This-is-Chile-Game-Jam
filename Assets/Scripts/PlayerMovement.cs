@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
     float range = 4.5f;
     bool isOnGround = true;
     public bool gameOver = false;
+    public ParticleSystem explosionParticle;
+    public ParticleSystem dirtParticle;
+    public AudioClip jumpSound;
+    public AudioClip crashSound;
+
+    private AudioSource audioPlayer;
 
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] float jumpForce = 1f;
@@ -17,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioPlayer = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,10 +46,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        if(Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
+            dirtParticle.Stop();
+            audioPlayer.PlayOneShot(jumpSound);
         }
     }
 
@@ -51,10 +60,14 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+            dirtParticle.Play();
         }
         else if(collision.gameObject.CompareTag("Obstacle"))
         {
+            dirtParticle.Stop();
             gameOver = true;
+            explosionParticle.Play();
+            audioPlayer.PlayOneShot(crashSound);
         }
     }
 
