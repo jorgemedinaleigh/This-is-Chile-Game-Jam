@@ -673,9 +673,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96ca0d1adc295446b878a1055b3bbac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacle: {fileID: 9067927053822108888, guid: 35393ba4cc166c4499247f6fcf73f2b7, type: 3}
-  startDelay: 0
-  repeatRate: 3
+  obstacles:
+  - {fileID: 9067927053822108888, guid: 35393ba4cc166c4499247f6fcf73f2b7, type: 3}
+  - {fileID: 6783883399277730960, guid: 9291bc431528b784481019e7c280dccc, type: 3}
+  - {fileID: 3598622317276584863, guid: 54827e1e47edf4d40ac1060acef97431, type: 3}
+  minRepeatRate: 0.1
+  maxRepeatRate: 3
 --- !u!4 &1982192970
 Transform:
   m_ObjectHideFlags: 0
