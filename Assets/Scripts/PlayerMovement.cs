@@ -35,13 +35,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessMovement()
     {
-        vertical = -Input.GetAxisRaw("Vertical");
+        if(gameOver == false)
+        {
+            vertical = -Input.GetAxisRaw("Vertical");
 
-        float xOffset = vertical * Time.deltaTime * movementSpeed;
-        float xPos = transform.localPosition.x + xOffset;
-        float clampedXPos = Mathf.Clamp(xPos, -range, range);
+            float xOffset = vertical * Time.deltaTime * movementSpeed;
+            float xPos = transform.localPosition.x + xOffset;
+            float clampedXPos = Mathf.Clamp(xPos, -range, range);
 
-        transform.localPosition = new Vector3(clampedXPos, transform.localPosition.y, transform.localPosition.z);
+            transform.localPosition = new Vector3(clampedXPos, transform.localPosition.y, transform.localPosition.z);
+        }
     }
 
     private void ProcessJump()
