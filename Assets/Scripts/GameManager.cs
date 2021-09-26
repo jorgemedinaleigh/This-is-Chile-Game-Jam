@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI timerText;
 
+    [SerializeField] float loadDelay = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +45,12 @@ public class GameManager : MonoBehaviour
     {
         if(playerMovement.gameOver)
         {
-            SceneManager.LoadScene("Main Menu");
+            Invoke("LoadMainMenu", loadDelay);
         }
+    }
+
+    private void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }
