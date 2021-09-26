@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         timer += Time.deltaTime;
         DisplayTime(timer);
+        HandleGameOver();
     }
 
     private void DisplayTime(float timeToDisplay)
@@ -34,6 +36,14 @@ public class GameManager : MonoBehaviour
             float milliseconds = (timeToDisplay % 1) * 1000;
 
             timerText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        }
+    }
+
+    private void HandleGameOver()
+    {
+        if(playerMovement.gameOver)
+        {
+            SceneManager.LoadScene("Main Menu");
         }
     }
 }
